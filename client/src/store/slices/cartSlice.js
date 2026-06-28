@@ -11,6 +11,7 @@ function pickCartItem(p) {
     price: Number(p.price) || 0,
     image: p.image,
     category: p.category,
+    qty: Number(p.qty) || 0,
   }
 }
 
