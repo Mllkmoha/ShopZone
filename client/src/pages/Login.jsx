@@ -2,10 +2,8 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setCredentials } from '../store/slices/authSlice'
 import { useNavigate, Link, Navigate } from 'react-router-dom'
-import axios from 'axios'
+import apiClient from '../api/client'
 import { useToast } from '../components/Toast'
-
-const API_BASE = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? '/api' : 'http://localhost:5000/api')
 
 export default function Login() {
   const dispatch = useDispatch()
@@ -32,7 +30,7 @@ export default function Login() {
     setError('')
     setBusy(true)
     try {
-      const { data } = await axios.post(`${API_BASE}/auth/login`, {
+      const { data } = await apiClient.post(`/auth/login`, {
         email: email.trim().toLowerCase(),
         password,
       })

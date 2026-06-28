@@ -1,10 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import axios from 'axios'
-
-const API_BASE = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? '/api' : 'http://localhost:5000/api')
+import apiClient from '../../api/client'
 
 export const fetchProducts = createAsyncThunk('products/fetchAll', async () => {
-  const { data } = await axios.get(`${API_BASE}/products`)
+  const { data } = await apiClient.get(`/products`)
   // The server returns a bare JSON array. Anything else is a server bug.
   if (!Array.isArray(data)) {
     throw new Error('Unexpected response shape from /api/products')

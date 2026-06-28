@@ -1,17 +1,15 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import axios from 'axios'
+import apiClient from '../api/client'
 import { addToCart } from '../store/slices/cartSlice'
 import { ProductDetailSkeleton } from '../components/Skeleton'
 import { ErrorState } from '../components/States'
 import { useToast } from '../components/Toast'
 import SafeImage from '../components/SafeImage'
 
-const API_BASE = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? '/api' : 'http://localhost:5000/api')
-
 async function fetchProduct(id, signal) {
-  const { data } = await axios.get(`${API_BASE}/products/${id}`, { signal })
+  const { data } = await apiClient.get(`/products/${id}`, { signal })
   return data
 }
 

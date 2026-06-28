@@ -5,8 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "rm -rf dist && vite build",
+    "postbuild": "node ./scripts/check-no-localhost.cjs",
     "lint": "oxlint",
+    "postinstall": "node ./scripts/patch-react-router.cjs",
     "preview": "vite preview"
   },
   "dependencies": {
