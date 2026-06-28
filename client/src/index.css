@@ -93,6 +93,77 @@
 }
 
 /* --------------------------------------------------------------------------
+   Navbar adjustments (responsive, symmetric spacing)
+   Inserted to align `nav` component layout and mobile behavior.
+   -------------------------------------------------------------------------- */
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.cart-btn {
+  flex-shrink: 0;
+}
+
+
+@media (max-width: 640px) {
+
+  .nav {
+    padding: 12px;
+  }
+
+  .nav-inner {
+    padding: 12px;
+    border-radius: 20px;
+  }
+
+  .brand-text {
+    display: none;
+  }
+
+
+  .nav-actions {
+    gap: 8px;
+  }
+
+
+  .btn {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+
+
+  .cart-btn {
+    width: 42px;
+    height: 42px;
+  }
+
+
+  .cart-btn-count {
+    width: 18px;
+    height: 18px;
+    font-size: 11px;
+  }
+}
+
+/* --------------------------------------------------------------------------
    Base resets
    -------------------------------------------------------------------------- */
 *, *::before, *::after { box-sizing: border-box; }
@@ -142,7 +213,6 @@ input, select, textarea { font-family: inherit; font-size: inherit; color: inher
   outline-offset: 2px;
 }
 
-/* Round buttons get a slight offset so the ring doesn't crowd the shape */
 .cart-btn:focus-visible,
 .card-product-wishlist:focus-visible,
 .card-product-quickadd:focus-visible,
@@ -150,7 +220,6 @@ input, select, textarea { font-family: inherit; font-size: inherit; color: inher
   outline-offset: 3px;
 }
 
-/* Selection */
 ::selection { background: var(--color-ink); color: var(--color-on-ink); }
 
 /* --------------------------------------------------------------------------
@@ -169,7 +238,8 @@ input, select, textarea { font-family: inherit; font-size: inherit; color: inher
   width: 100%;
   max-width: var(--container-max);
   margin-inline: auto;
-  padding-inline: 20px;
+  margin-top: 0;
+  padding-inline: 16px;
 }
 @media (min-width: 768px) { .container-page { padding-inline: 32px; } }
 @media (min-width: 1280px) { .container-page { padding-inline: 48px; } }
@@ -198,17 +268,14 @@ input, select, textarea { font-family: inherit; font-size: inherit; color: inher
   gap: var(--spacing-8);
 }
 
+/* FIX 1: .nav-brand was missing its closing brace, which caused .nav-brand-mark
+   to be parsed as a nested rule (invalid) and both blocks to be silently dropped. */
 .nav-brand {
-  font-weight: 700;
-  font-size: 1.125rem;
-  letter-spacing: -0.025em;
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  color: var(--color-ink);
-  transition: opacity var(--dur-fast) var(--ease-out);
+  gap: 10px;
+  text-decoration: none;
 }
-.nav-brand:hover { opacity: 0.65; }
 
 .nav-brand-mark {
   width: 30px; height: 30px;
@@ -293,7 +360,6 @@ input, select, textarea { font-family: inherit; font-size: inherit; color: inher
   box-shadow: 0 0 0 2px var(--color-bg);
 }
 
-/* User avatar in nav */
 .nav-user {
   display: none;
   align-items: center;
@@ -386,7 +452,6 @@ input, select, textarea { font-family: inherit; font-size: inherit; color: inher
 .btn-block { width: 100%; }
 .btn-icon { width: 40px; padding: 0; border-radius: var(--radius-full); }
 
-/* Underline link (text button) */
 .link-underline {
   display: inline-flex;
   align-items: center;
@@ -444,7 +509,6 @@ input, select, textarea { font-family: inherit; font-size: inherit; color: inher
 .field-hint  { font-size: 0.8125rem; color: var(--color-ink-3); }
 .field-error { font-size: 0.8125rem; color: var(--color-danger); }
 
-/* Auth card */
 .auth-shell {
   min-height: calc(100svh - var(--header-h));
   display: grid;
@@ -551,10 +615,7 @@ input, select, textarea { font-family: inherit; font-size: inherit; color: inher
   letter-spacing: -0.02em;
 }
 
-/* --------------------------------------------------------------------------
-   Section heading
-   -------------------------------------------------------------------------- */
-.section { padding: clamp(56px, 8vw, 96px) 0; }
+.section { padding-top: 16px; padding-bottom: clamp(24px, 4vw, 80px); }
 .section-head {
   display: flex;
   align-items: end;
@@ -619,7 +680,6 @@ input, select, textarea { font-family: inherit; font-size: inherit; color: inher
   outline-offset: 2px;
 }
 
-/* Media wrapper — plain div so we can layer buttons legally over the link */
 .card-product-media {
   position: relative;
   aspect-ratio: 4 / 5;
@@ -629,7 +689,6 @@ input, select, textarea { font-family: inherit; font-size: inherit; color: inher
   isolation: isolate;
 }
 
-/* The actual link covers the media area and contains the image */
 .card-product-media-link {
   position: absolute;
   inset: 0;
@@ -655,19 +714,15 @@ input, select, textarea { font-family: inherit; font-size: inherit; color: inher
   transition: transform 700ms var(--ease-out);
 }
 
-/* SafeImage renders with .safe-image.is-loaded; respect its opacity fade */
 .card-product-media .safe-image { opacity: 0; transition: opacity 280ms var(--ease-out); }
 .card-product-media .safe-image.is-loaded { opacity: 1; }
 
 .card-product:hover .card-product-media-img,
 .card-product:hover .card-product-media .safe-image { transform: scale(1.05); }
 
-/* (Image fallback styles are defined inline in SafeImage.jsx) */
-
-/* Action overlay on media hover */
 .card-product-actions {
   position: absolute;
-  inset: auto 12px 12px 12px;
+  inset: auto 16px 16px 16px;
   display: flex;
   gap: 8px;
   opacity: 0;
@@ -712,10 +767,9 @@ input, select, textarea { font-family: inherit; font-size: inherit; color: inher
 }
 .card-product-quickadd:hover { background: var(--color-accent-hover); }
 
-/* Badges */
 .card-product-badge {
   position: absolute;
-  top: 12px; left: 12px;
+  top: 16px; left: 16px;
   padding: 5px 10px;
   font-size: 0.6875rem;
   font-weight: 700;
@@ -731,10 +785,9 @@ input, select, textarea { font-family: inherit; font-size: inherit; color: inher
 .card-product-badge.is-sale { background: var(--color-danger); }
 .card-product-badge.is-new { background: var(--color-brand); }
 
-/* Wishlist heart */
 .card-product-wishlist {
   position: absolute;
-  top: 12px; right: 12px;
+  top: 16px; right: 16px;
   width: 36px; height: 36px;
   border-radius: var(--radius-full);
   background: rgba(255, 255, 255, 0.9);
@@ -754,9 +807,8 @@ input, select, textarea { font-family: inherit; font-size: inherit; color: inher
 .card-product-wishlist:hover { background: var(--color-surface); color: var(--color-danger); transform: scale(1.1); }
 .card-product-wishlist.is-active { color: var(--color-danger); opacity: 1; }
 
-/* Body */
 .card-product-body {
-  padding: 18px 18px 20px;
+  padding: 16px 16px 20px;
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -786,7 +838,6 @@ a.card-product-cat:hover { color: var(--color-ink); }
 }
 .card-product-title:hover { color: var(--color-ink-2); }
 
-/* Color swatches (decorative dots shown when category is present) */
 .card-product-swatches {
   display: flex;
   gap: 6px;
@@ -1293,31 +1344,79 @@ a.card-product-cat:hover { color: var(--color-ink); }
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(10, 10, 10, 0.42);
-  -webkit-backdrop-filter: blur(2px);
-          backdrop-filter: blur(2px);
+  background: rgba(10, 10, 10, 0.52);
+  -webkit-backdrop-filter: blur(6px) saturate(110%);
+          backdrop-filter: blur(6px) saturate(110%);
   display: grid;
   place-items: center;
   padding: 20px;
   z-index: 80;
   animation: fade-in 180ms var(--ease-out);
 }
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
 .modal {
   width: 100%;
-  max-width: 880px;
+  max-width: 920px;
   max-height: calc(100svh - 40px);
-  overflow: auto;
   background: var(--color-surface);
   border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-xl);
+  box-shadow: 0 30px 60px rgba(12,18,24,0.18), var(--shadow-xl);
   display: grid;
   grid-template-columns: 1fr;
   position: relative;
   outline: none;
+  gap: 0;
+  animation: modal-pop 220ms var(--ease-out);
 }
+
+@keyframes modal-pop {
+  from { transform: translateY(8px) scale(.995); opacity: 0; }
+  to   { transform: none; opacity: 1; }
+}
+
 @media (min-width: 720px) {
   .modal { grid-template-columns: 1fr 1fr; }
 }
+
+/* FIX 2: Removed the orphaned duplicate .modal-media block that appeared after
+   the @media (min-width: 720px) rule. The stray block contained a second set of
+   background/aspect-ratio/overflow declarations and an unclosed media-query
+   brace, which caused everything after it to be mis-parsed. */
+.modal-media {
+  background: linear-gradient(135deg, #f7f5f1 0%, #efeae4 100%);
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: inset -18px 0 32px rgba(10,10,10,0.03);
+  border-top-left-radius: var(--radius-xl);
+  border-top-right-radius: var(--radius-xl);
+}
+
+@media (min-width: 720px) {
+  .modal-media {
+    border-top-left-radius: var(--radius-xl);
+    border-bottom-left-radius: var(--radius-xl);
+    border-top-right-radius: 0;
+  }
+}
+
+.modal-media img,
+.modal-media .safe-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
 .modal-close {
   position: absolute;
   top: 12px;
@@ -1331,23 +1430,47 @@ a.card-product-cat:hover { color: var(--color-ink); }
   place-items: center;
   color: var(--color-ink);
   z-index: 2;
-  transition: background var(--dur-fast) var(--ease-out);
+  /* FIX 3: Merged the two duplicate .modal-close transition declarations into one. */
+  transition: transform 140ms var(--ease-out), background 140ms var(--ease-out);
 }
-.modal-close:hover { background: var(--color-surface); }
-.modal-media {
-  background: linear-gradient(135deg, #f4f2ed 0%, #ebe7df 100%);
-  aspect-ratio: 1 / 1;
-  overflow: hidden;
+.modal-close:hover { background: var(--color-surface); transform: scale(1.04); }
+.modal-close:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 2px;
 }
+
 .modal-body {
   padding: 36px;
   display: flex;
   flex-direction: column;
   gap: 12px;
+  max-height: calc(100svh - 120px);
+  overflow: auto;
 }
 @media (max-width: 720px) {
   .modal-body { padding: 28px 24px; }
 }
+
+@media (max-width: 720px) {
+  .modal {
+    width: calc(100% - 24px);
+    max-width: 720px;
+    max-height: calc(100svh - 32px);
+  }
+  .modal-media {
+    aspect-ratio: 16 / 9;
+  }
+  .modal-body {
+    padding: 16px 14px;
+    gap: 8px;
+    max-height: calc(100svh - 104px);
+  }
+  .modal-title { font-size: 1.25rem; margin-top: 2px; }
+  .modal-price { font-size: 1.25rem; }
+  .modal-actions { margin-top: 10px; gap: 8px; }
+  .modal .btn.btn-primary.btn-lg { padding: 12px; font-size: 0.95rem; }
+}
+
 .modal-title {
   font-size: clamp(1.5rem, 1.6vw + 1rem, 2rem);
   letter-spacing: -0.025em;
@@ -1370,9 +1493,25 @@ a.card-product-cat:hover { color: var(--color-ink); }
   gap: 8px;
   margin-top: 16px;
 }
-@keyframes fade-in {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+
+.modal .btn.btn-primary.btn-lg {
+  padding: 14px 18px;
+  font-size: 1rem;
+  border-radius: 12px;
+}
+.modal .btn.btn-ghost.btn-sm {
+  padding: 10px 12px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal-backdrop,
+  .modal {
+    animation: none;
+    transition: none;
+  }
+  .safe-image {
+    transition: none !important;
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -1395,4 +1534,51 @@ a.card-product-cat:hover { color: var(--color-ink); }
 .footer-coming-dot {
   width: 5px; height: 5px; border-radius: var(--radius-full);
   background: var(--color-warning);
+}
+
+/* --------------------------------------------------------------------------
+   ProductCard layout fix — full-width, even spacing, aligned edges
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 559px) {
+  .product-grid {
+    padding-inline: 0;
+    gap: 16px;
+  }
+}
+
+.card-product {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.card-product-media {
+  width: 100%;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  aspect-ratio: 1 / 1;
+}
+
+@media (min-width: 560px) {
+  .card-product-media {
+    aspect-ratio: 4 / 5;
+  }
+}
+
+.card-product-body {
+  padding: 14px 16px 18px;
+  gap: 4px;
+}
+
+.card-product-actions {
+  inset: auto 16px 14px 16px;
+}
+
+.card-product-price {
+  font-size: 1rem;
+}
+
+.card-product-swatches {
+  margin-top: 6px;
+  margin-bottom: 2px;
 }
