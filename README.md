@@ -98,11 +98,10 @@ Base: `/api`
 - Create feature branches, open PRs, and include short descriptions.
 
 ## Screenshots / Demo
-- Add screenshots under `client/public/` and reference them in this README.
+- <img width="2880" height="4064" alt="image" src="https://github.com/user-attachments/assets/48955d3b-542d-4453-89b7-44bb9478310c" />
+
 
 ## License
 This project is released under the MIT License — see `LICENSE`.
 
----
 
-If you want, I can also prepare a short `README` summary for the GitHub repo description and fill `client/public/` with a sample screenshot file. Tell me which you'd prefer next.
