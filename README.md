@@ -97,8 +97,8 @@ Base: `/api`
 ## Contributing
 - Create feature branches, open PRs, and include short descriptions.
 
-## Screenshots / Demo
-- <img width="2880" height="4064" alt="image" src="https://github.com/user-attachments/assets/48955d3b-542d-4453-89b7-44bb9478310c" />
+## Screenshots
+<img width="2880" height="3854" alt="image" src="https://github.com/user-attachments/assets/c68392e6-c148-4900-b167-764ce38311b0" />
 
 
 ## License
