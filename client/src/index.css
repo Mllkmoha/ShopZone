@@ -768,7 +768,9 @@ input, select, textarea { font-family: inherit; font-size: inherit; color: inher
   color: var(--color-ink-3);
   text-transform: uppercase;
   letter-spacing: 0.1em;
+  transition: color var(--dur-fast) var(--ease-out);
 }
+a.card-product-cat:hover { color: var(--color-ink); }
 .card-product-title {
   font-size: 0.9375rem;
   font-weight: 600;
@@ -1394,10 +1396,3 @@ input, select, textarea { font-family: inherit; font-size: inherit; color: inher
   width: 5px; height: 5px; border-radius: var(--radius-full);
   background: var(--color-warning);
 }
-
-/* Card-product cat is now a clickable link — give it hover */
-.card-product-cat {
-  text-decoration: none;
-  transition: color var(--dur-fast) var(--ease-out);
-}
-a.card-product-cat:hover { color: var(--color-ink); }

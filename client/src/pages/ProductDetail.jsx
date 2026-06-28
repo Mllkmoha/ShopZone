@@ -8,9 +8,11 @@ import { ErrorState } from '../components/States'
 import { useToast } from '../components/Toast'
 import SafeImage from '../components/SafeImage'
 
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+
 async function fetchProduct(id, signal) {
-  const { data } = await axios.get(`http://localhost:5000/api/products/${id}`, { signal })
-  return data?.product ?? data
+  const { data } = await axios.get(`${API_BASE}/products/${id}`, { signal })
+  return data
 }
 
 export default function ProductDetail() {

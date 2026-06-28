@@ -22,7 +22,7 @@ export default function Navbar() {
         </Link>
 
         <nav className="nav-links" aria-label="Primary">
-          <NavLink to="/" end className={({ isActive }) => 'nav-link' + (isActive ? ' is-active' : '')}>
+          <NavLink to="/" end className={({ isActive }) => `nav-link${isActive ? ' is-active' : ''}`}>
             Shop
           </NavLink>
           <NavLink to="/?category=new" className="nav-link">New in</NavLink>

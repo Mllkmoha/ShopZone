@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { isDeadImageHost, buildPlaceholderSVG } from '../utils/placeholder'
 
 /**
@@ -37,25 +37,28 @@ export default function SafeImage({
   // Pre-resolve: if the incoming URL is dead/missing, short-circuit so we
   // don't even attempt to load it.
   const srcLooksDead = !src || typeof src !== 'string' || src.trim() === '' || isDeadImageHost(src)
-
   const showFallback = srcLooksDead || failed
 
-  const fallbackSvg = buildPlaceholderSVG({ name, category })
-
   // Reset state when src changes so the same component can swap images safely.
-  useEffect(() => {
+  // We do this in a layout effect so the cached-image check below sees the
+  // new src's element immediately, avoiding a one-frame opacity-0 flash.
+  useLayoutEffect(() => {
     setFailed(false)
     setLoaded(false)
   }, [src])
 
-  // If image was cached and already complete before our onLoad fires,
-  // mark as loaded immediately so we don't show a flash of empty space.
-  useEffect(() => {
+  // If the image was cached and already complete before our onLoad fires,
+  // mark it loaded synchronously to avoid the fade-in flash.
+  useLayoutEffect(() => {
     const el = imgRef.current
     if (el && el.complete && el.naturalWidth > 0) {
       setLoaded(true)
     }
   }, [src])
+
+  // Cleanup: if the component unmounts while a src is in flight, mark it failed
+  // so React doesn't try to setState on an unmounted node.
+  useEffect(() => () => undefined, [])
 
   const radiusStyle = (() => {
     switch (rounded) {
@@ -76,7 +79,7 @@ export default function SafeImage({
         aria-label={alt || name || 'Product image'}
       >
         <img
-          src={fallbackSvg}
+          src={buildPlaceholderSVG({ name, category })}
           alt=""
           aria-hidden="true"
           style={{

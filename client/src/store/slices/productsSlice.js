@@ -1,8 +1,14 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+
 export const fetchProducts = createAsyncThunk('products/fetchAll', async () => {
-  const { data } = await axios.get('http://localhost:5000/api/products')
+  const { data } = await axios.get(`${API_BASE}/products`)
+  // The server returns a bare JSON array. Anything else is a server bug.
+  if (!Array.isArray(data)) {
+    throw new Error('Unexpected response shape from /api/products')
+  }
   return data
 })
 
@@ -17,18 +23,15 @@ const productsSlice = createSlice({
     builder
       .addCase(fetchProducts.pending, (state) => {
         state.loading = true
+        state.error = null
       })
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.loading = false
-        const payload = action.payload
-        // Normalize: accept either a bare array or { products: [...] } / { data: [...] }
-        state.items = Array.isArray(payload)
-          ? payload
-          : payload?.products ?? payload?.data ?? []
+        state.items = action.payload
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.loading = false
-        state.error = action.error.message
+        state.error = action.error.message || 'Failed to load products'
       })
   },
 })

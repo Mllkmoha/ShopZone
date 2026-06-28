@@ -1,7 +1,7 @@
 export function ProductCardSkeleton() {
   return (
     <div className="skeleton-card" aria-hidden="true">
-      <div className="skeleton skeleton-card-media" style={{ borderRadius: 0 }} />
+      <div className="skeleton skeleton-card-media" />
       <div className="skeleton-card-body">
         <div className="skeleton" style={{ height: 12, width: '40%' }} />
         <div className="skeleton" style={{ height: 18, width: '85%' }} />
@@ -9,7 +9,8 @@ export function ProductCardSkeleton() {
         <div className="skeleton" style={{ height: 14, width: '70%' }} />
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 12 }}>
           <div className="skeleton" style={{ height: 22, width: 60 }} />
-          <div className="skeleton" style={{ height: 36, width: 110, borderRadius: 'var(--radius-md)' }} />
+          {/* .skeleton already has the right border-radius via CSS — no inline override needed */}
+          <div className="skeleton" style={{ height: 36, width: 110 }} />
         </div>
       </div>
     </div>

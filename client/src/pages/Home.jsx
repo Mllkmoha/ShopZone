@@ -46,14 +46,13 @@ export default function Home() {
   const { items, loading, error } = useSelector(state => state.products)
   const category = useQueryParam('category')
 
-  // Fetch once. If we already have items (persisted via Redux cache or
-  // localStorage), don't refetch on every nav into Home.
+  // Fetch once when we have nothing. Depends on the actual state we read
+  // so a previous failure (error set) doesn't permanently block retries.
   useEffect(() => {
     if (items.length === 0 && !loading && !error) {
       dispatch(fetchProducts())
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch])
+  }, [dispatch, items.length, loading, error])
 
   const { items: visibleItems, label } = applyFilter(items, category)
 

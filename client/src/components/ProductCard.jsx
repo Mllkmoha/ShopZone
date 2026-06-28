@@ -5,10 +5,13 @@ import { addToCart } from '../store/slices/cartSlice'
 import { useToast } from './Toast'
 import QuickViewModal from './QuickViewModal'
 import SafeImage from './SafeImage'
+import { hashString } from '../utils/placeholder'
 
 const STARS = [1, 2, 3, 4, 5]
 
-// Deterministic pseudo-random based on product id — gives swatches variety per card
+// Deterministic pseudo-random based on product id — gives swatches variety per card.
+// Uses the same hash as the placeholder gradient so visual variety stays consistent
+// with the rest of the design system.
 function seededPalette(seed = '') {
   const palettes = [
     ['#1f1f1f', '#3d3a36', '#9a958c'],
@@ -18,9 +21,7 @@ function seededPalette(seed = '') {
     ['#6b3e8e', '#e6dcf0', '#3d3a36'],
     ['#d4a574', '#f0e4d0', '#5c4a36'],
   ]
-  let hash = 0
-  for (let i = 0; i < seed.length; i++) hash = (hash * 31 + seed.charCodeAt(i)) >>> 0
-  return palettes[hash % palettes.length]
+  return palettes[hashString(seed) % palettes.length]
 }
 
 export default function ProductCard({ product }) {
@@ -47,6 +48,8 @@ export default function ProductCard({ product }) {
   const handleWishlist = (e) => {
     e.preventDefault()
     e.stopPropagation()
+    // Read the upcoming state from a pure setter so the side-effect (notify)
+    // uses the same value the component will commit.
     setWishlisted(w => {
       const next = !w
       notify(

@@ -15,6 +15,10 @@ export const store = configureStore({
 // serialization cost is negligible compared to the win of surviving refresh.
 let lastCart = store.getState().cart
 store.subscribe(() => {
+  // Redux Toolkit uses Immer, so a slice reference only changes when one of
+  // its top-level fields is reassigned. `!==` is therefore exactly the right
+  // equality check here — strict-equal would miss any nested mutation that
+  // doesn't replace the slice root.
   const next = store.getState().cart
   if (next !== lastCart) {
     lastCart = next

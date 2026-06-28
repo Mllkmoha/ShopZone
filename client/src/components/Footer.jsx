@@ -2,18 +2,19 @@ import { Link } from 'react-router-dom'
 
 const SUPPORT_EMAIL = 'support@shopzone.example'
 
-export default function Footer() {
-  const year = new Date().getFullYear()
-
-  // Helper: links that aren't backed by a real route yet render as a
-  // non-clickable <span> with a "Coming soon" badge — honest UX beats
-  // a dead anchor that scrolls nowhere.
-  const ComingSoon = () => (
+// Links that aren't backed by a real route yet render as a non-clickable
+// <span> with a "Coming soon" badge — honest UX beats a dead anchor.
+function ComingSoon() {
+  return (
     <span className="footer-coming" aria-label="Coming soon">
       <span className="footer-coming-dot" aria-hidden="true" />
       Soon
     </span>
   )
+}
+
+export default function Footer() {
+  const year = new Date().getFullYear()
 
   return (
     <footer className="footer" role="contentinfo">

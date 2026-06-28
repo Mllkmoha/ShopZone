@@ -122,7 +122,7 @@ export default function Cart() {
 
               <div className="cart-item-side">
                 <span className="cart-item-subtotal-label">Subtotal</span>
-                <div className="cart-item-subtotal">${(item.price * item.qty).toFixed(2)}</div>
+                <div className="cart-item-subtotal">${(Number(item.price) * Number(item.qty || 0)).toFixed(2)}</div>
               </div>
             </article>
           ))}
@@ -164,6 +164,7 @@ export default function Cart() {
               type="button"
               className="btn btn-primary btn-xl btn-block"
               onClick={handleCheckout}
+              disabled={items.length === 0}
             >
               Checkout securely
             </button>

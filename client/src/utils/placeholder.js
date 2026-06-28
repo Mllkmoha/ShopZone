@@ -39,7 +39,9 @@ export function isDeadImageHost(url) {
   }
 }
 
-function hashString(s = '') {
+// Exported so other components (e.g. ProductCard) can derive deterministic
+// values from a product id without re-implementing the same hash loop.
+export function hashString(s = '') {
   let h = 0
   for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0
   return h
