@@ -8,7 +8,7 @@ import { ErrorState } from '../components/States'
 import { useToast } from '../components/Toast'
 import SafeImage from '../components/SafeImage'
 
-const API_BASE = import.meta.env.VITE_API_URL || '/api'
+const API_BASE = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? '/api' : 'http://localhost:5000/api')
 
 async function fetchProduct(id, signal) {
   const { data } = await axios.get(`${API_BASE}/products/${id}`, { signal })

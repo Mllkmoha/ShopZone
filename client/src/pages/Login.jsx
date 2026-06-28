@@ -5,7 +5,7 @@ import { useNavigate, Link, Navigate } from 'react-router-dom'
 import axios from 'axios'
 import { useToast } from '../components/Toast'
 
-const API_BASE = import.meta.env.VITE_API_URL || '/api'
+const API_BASE = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? '/api' : 'http://localhost:5000/api')
 
 export default function Login() {
   const dispatch = useDispatch()
